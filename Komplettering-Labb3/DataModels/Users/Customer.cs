@@ -9,4 +9,4 @@ public class Customer : User
     public Customer(string name, string password) : base(name, password)
     {
     }
-}
+} 

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:Komplettering_Labb3.ViewModels"
     xmlns:views="clr-namespace:Komplettering_Labb3.Views"
     Title="MainWindow"
     Width="800"
@@ -12,16 +13,23 @@
     MinHeight="550"
     mc:Ignorable="d">
     <Grid>
-        <TabControl>
-            <TabItem Name="LoginTab" Header="Login">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:StartViewModel}">
+                <views:StartView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:LogInViewModel}">
                 <views:LoginView />
-            </TabItem>
-            <TabItem Name="AdminTab" Header="Admin">
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AdminViewModel}">
                 <views:AdminView />
-            </TabItem>
-            <TabItem Name="ShopTab" Header="Customer">
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:RegisterViewModel}">
+                <views:RegisterView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ShopViewModel}">
                 <views:ShopView />
-            </TabItem>
-        </TabControl>
+            </DataTemplate>
+        </Grid.Resources>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

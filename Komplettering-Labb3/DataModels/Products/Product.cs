@@ -4,9 +4,9 @@ public abstract class Product
 {
     public string Name { get; set; }
 
-    public bool Price { get; set; }
+    public float Price { get; set; }
 
-    protected Product(string name, bool price)
+    protected Product(string name, float price)
     {
         Name = name;
         Price = price;

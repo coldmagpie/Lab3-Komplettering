@@ -9,8 +9,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataModels\Products\" />
+    <None Remove="Images\celticcross.png" />
+    <None Remove="Images\druidsymbol.png" />
+    <None Remove="Images\Symbol.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\celticcross.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\druidsymbol.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Symbol.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
