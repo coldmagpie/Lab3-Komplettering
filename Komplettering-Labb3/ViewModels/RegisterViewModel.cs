@@ -37,7 +37,7 @@ namespace Komplettering_Labb3.ViewModels
             {
                 SetProperty(ref _password, value);
                 NavigateAdminCommand.NotifyCanExecuteChanged();
-                //NavigateCustomerCommand.NotifyCanExecuteChanged();
+                NavigateCustomerCommand.NotifyCanExecuteChanged();
             }
         }
 
@@ -52,8 +52,16 @@ namespace Komplettering_Labb3.ViewModels
             _navigationManager = navigationManager;
             NavigateLogInCommand = new RelayCommand(() => _navigationManager.CurrentViewModel = new LogInViewModel(_navigationManager));
             NavigateGoBackCommand = new RelayCommand(() => _navigationManager.CurrentViewModel = new StartViewModel(_navigationManager));
-            NavigateAdminCommand = new RelayCommand(() => UserManager.Register(Name, Password, UserTypes.Admin));
-            NavigateCustomerCommand = new RelayCommand(() => UserManager.Register(Name, Password, UserTypes.Customer));
+            NavigateAdminCommand = new RelayCommand(() =>
+            {
+                UserManager.Register(Name, Password, UserTypes.Admin);
+                _navigationManager.CurrentViewModel = new LogInViewModel(_navigationManager);
+            });
+            NavigateCustomerCommand = new RelayCommand(() =>
+            {
+                UserManager.Register(Name, Password, UserTypes.Customer);
+                _navigationManager.CurrentViewModel = new LogInViewModel(_navigationManager);
+            });
         }
     }
 }

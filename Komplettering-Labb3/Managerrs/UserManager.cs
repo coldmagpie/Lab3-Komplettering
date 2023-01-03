@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using Komplettering_Labb3.DataModels.Products;
 using Komplettering_Labb3.DataModels.Users;
 using Komplettering_Labb3.Enums;
@@ -13,9 +15,9 @@ namespace Komplettering_Labb3.Managerrs;
 
 public static class UserManager
 {
-    private static IEnumerable<User>? _users = new List<User>();
+    private static IEnumerable<User> _users = new List<User>();
     public static IEnumerable<User>? Users => _users;
-   
+
     public static string path = (Path.Combine(Environment.GetFolderPath(folder: Environment.SpecialFolder.LocalApplicationData), "Store"));
     
     private static User _currentUser;
@@ -46,8 +48,6 @@ public static class UserManager
         throw new NotImplementedException();
     }
 
-
-
     public static async Task SaveUsersToFile()
     {
         var filePath = Path.Combine(path, "Users.json");
@@ -64,24 +64,34 @@ public static class UserManager
         using (StreamReader r = new StreamReader(filePath))
         {
             string json = await r.ReadToEndAsync();
-            var users = JsonSerializer.Deserialize<List<User>>(json);
+            _users = JsonSerializer.Deserialize<List<User>>(json);
         }
     }
     public static void Register(string name, string password, UserTypes userType)
     {
-        List<User> temp = new List<User>(_users);
-        if (userType.Equals(UserTypes.Admin))
-        { 
-            temp.Add(new Admin(name, password));
-        }
-        else if(userType.Equals(UserTypes.Customer))
+        if (userType is UserTypes.Admin)
         {
-            temp.Add(new Customer(name, password));
+            _users = _users.Append(new Admin(name, password));
         }
-
-        _users = temp;
+        else if (userType is UserTypes.Customer)
+        {
+            _users = _users.Append(new Customer(name, password));
+        }
         SaveUsersToFile();
-
-        //_navigationManager.CurrentViewModel = new LogInViewModel(_navigationManager);
+    }
+    public static bool LogIn(string name, string password)
+    {
+        LoadUsersFromFile();
+        var user = _users.FirstOrDefault(u => u.Name.Equals(name));
+        if (user == null)
+        {
+            return false;
+        };
+        if (user.Authenticate(password))
+        {
+            _currentUser = user;
+            return true;
+        };
+        return false;
     }
 }

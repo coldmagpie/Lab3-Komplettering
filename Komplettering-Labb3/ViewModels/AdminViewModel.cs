@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Komplettering_Labb3.ViewModels
 {
-    public class AdminViewModel
+    public class AdminViewModel:ObservableObject
     {
         private NavigationManager _navigationManager;
        
